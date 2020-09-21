@@ -4,6 +4,10 @@ class Budget {
         this.budget = Number( budget);
         this.budgetLeft = this.budget
     }
+
+    subtractFromBudget(amount){
+        return this.budgetLeft -= amount;
+    }
 }
 
 class HTML {
@@ -18,26 +22,21 @@ class HTML {
     //Display error msg
     printMessage(message, className){
         const messageBox = document.createElement('div');
-        messageBox.classList.add('alert', className)
+        messageBox.classList.add('alert-danger', className)
         messageBox.appendChild(document.createTextNode(message))
 
         document.querySelector('.content').insertBefore(messageBox, expenseForm);
-
         setTimeout(() => {
-                document.querySelector('.alert').remove()
-                // expenseForm.reset()
-
+                document.querySelector('.alert-danger').remove()
+                expenseForm.reset()
             }, 3000)  
     }
 
     addExpenseList (expense, amount){
         const expenseList = document.querySelector('#expenses')
         const list = document.createElement('p');
-          list.className = 'item';
-        
+          list.className = 'item';   
         // console.log(expense, amount)
-
-
         list.innerHTML =`
             ${expense}
             <span>$ ${amount}</span>
@@ -46,13 +45,29 @@ class HTML {
         expenseList.appendChild(list)
     }
 
+    trackBudget(amount){
+        const budgetLeftDollars = budget.subtractFromBudget(amount)
+        console.log('track', budgetLeftDollars)
+        budgetLeft.innerHTML = `${budgetLeftDollars}`;
+
+        console.log(budget)
+        // check when 50% is spent
+        if((budget.budget / 4) > budgetLeftDollars){
+            budgetLeft.parentElement.classList.remove('left', 'alert-yellow')
+            budgetLeft.parentElement.classList.add('alert-red')
+        }else if((budget.budget / 2) > budgetLeftDollars){
+            budgetLeft.parentElement.classList.remove('left')
+            budgetLeft.parentElement.classList.add('alert-yellow')
+        }
+        
+    }
+
 }
 
 // Variables
 const expenseForm = document.querySelector('#expense-form'),
       budgetTotal = document.querySelector('span#total'),
       budgetLeft = document.querySelector('span#left')
-
 
 let budget, userBudget;
 
@@ -88,6 +103,9 @@ function eventListeners(){
         }
         else{
             html.addExpenseList(expenseValue, amountValue)
+            html.trackBudget(amountValue)
+            html.printMessage('Added successfully...',  'alert-success')
+
         }
 
     })

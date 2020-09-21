@@ -19,8 +19,8 @@ body{
     --green: #2ecc71;
     --green2: #2ecc7054;
     --yellow: yellow;
-    --yellow2: rgba(255, 255, 0, 0.404);
     --blue:#03A9F4 ;
+    --yellow2: rgba(255, 255, 0, 0.466);
     --blue2:#03a8f450 ;
     --light: #fff;
     --dark: #444;
@@ -106,24 +106,30 @@ font-weight: 300;
 margin-top: -4px;
 }
 
-.list-box .budget, .budget2, .budget3{
+.list-box .budget{
    padding:  .8rem .6rem;
-   background: var(--blue2);
    border-radius: 4px;
    font-size: 14px;
+}
 
+.list-box .budget.fix{
+   background: var(--blue2);
 
 }
-.budget.left{
+   
+.budget.left {
    background: var(--green2);
 }
-.budget2{
-   background: var(--yellow2);
+.alert-green {
+   background: var(--green2);
 }
 
-.budget3{
+.alert-red{
     background: var(--red2);
     color: rgba(255, 0, 0, 0.527);
+}
+.alert-yellow{
+    background: var(--yellow2);
 }
 
 
@@ -156,11 +162,26 @@ margin-top: -4px;
 
 }
 
-.alert{
+.alert-danger {
     /* display:none; */
     padding: .5rem .5rem;
     background: var(--red2);
     color: brown;
+    /* font-weight: bold; */
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    left: 1px;
+    margin-bottom: 10px;
+    width: 100%;
+
+}
+.alert-success {
+    /* display:none; */
+    padding: .5rem .5rem;
+    background: var(--green2);
+    color: var(--dark);
     /* font-weight: bold; */
     border-radius: 6px;
     text-align: center;
