@@ -10,20 +10,20 @@
     
     <div class="container">
         <h1 >Monthly Budget App</h1>
-            <!-- <div class="alert"> <p>Message</p></div> -->
-    <div class="show-box">
-<!-- ===list Form=== -->
-        <div class="form box-a">
-            <p class="title">Form Title </p>
-            
-           <form id="input-form">
+        <div class="show-box">
+            <!-- ===list Form=== -->
+            <div class="form content box-a ">
+                <p class="title">Form Title </p>
+                
+                <!-- <div class='alert'> </div>8 -->
+                <form id="expense-form">
                 <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text" class="input" placeholder='Eg. Transportation'>
+                    <label>Expense Type:</label>
+                    <input type="text" class="input" id="expense" placeholder='Eg. Transportation'>
                 </div>
                 <div class="form-group">
                     <label >Amount:</label>
-                    <input type="text" class="input" placeholder='Eg. 20'>
+                    <input type="text" class="input" id="amount" placeholder='Eg. 20'>
                 </div>
                 <div class="btn">
                     <input type="submit" value="Submit">
@@ -33,11 +33,16 @@
 <!-- ===list Container=== -->
         <div class='box-b'>
             <p class="title">List Items </p>
-            <div class="list-box">
-                <p class="item">List Items <span>$ 200</span></p>  
-                <div ><p class="budget">Budget: $ 500</p></div>  
-                <div ><p class="budget2">Budget: $ 500</p></div>  
-                <div ><p class="budget3">Budget: $ 500</p></div>  
+            <div class="list-box" id="expenses">
+                <p class="item">List Items <span>$ 200</span></p> 
+            </div>
+            <div class="list-box ">
+                
+                <!-- ===== Actual Budget ===== -->
+                <div ><p class="budget">Budget: $ <span id="total"></span></p></div>  
+                <div ><p class="budget left">Left: $ <span id="left"></span></p></div>  
+                <!-- <div ><p class="budget2">Budget: $ 500</p></div>   -->
+                <!-- <div ><p class="budget3">Budget: $ 500</p></div>   -->
             </div> 
         </div>
     </div>
