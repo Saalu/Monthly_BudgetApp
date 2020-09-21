@@ -1,102 +1,97 @@
-// variable
-const itemList = document.getElementById('list-container')
+// Classes
+class Budget {
+    constructor(budget){
+        this.budget = Number( budget);
+        this.budgetLeft = this.budget
+    }
+}
 
-// addEventListener
-eventListeners()
+class HTML {
+    // Insert the budget when user submit it
+    insertBudget(amount){
+        console.log(amount)
+        // insert into HTML
+        budgetTotal.innerHTML = `${amount}`;
+        budgetLeft.innerHTML = `${amount}`;
+    }
+
+    //Display error msg
+    printMessage(message, className){
+        const messageBox = document.createElement('div');
+        messageBox.classList.add('alert', className)
+        messageBox.appendChild(document.createTextNode(message))
+
+        document.querySelector('.content').insertBefore(messageBox, expenseForm);
+
+        setTimeout(() => {
+                document.querySelector('.alert').remove()
+                // expenseForm.reset()
+
+            }, 3000)  
+    }
+
+    addExpenseList (expense, amount){
+        const expenseList = document.querySelector('#expenses')
+        const list = document.createElement('p');
+          list.className = 'item';
+        
+        // console.log(expense, amount)
+
+
+        list.innerHTML =`
+            ${expense}
+            <span>$ ${amount}</span>
+        `;
+
+        expenseList.appendChild(list)
+    }
+
+}
+
+// Variables
+const expenseForm = document.querySelector('#expense-form'),
+      budgetTotal = document.querySelector('span#total'),
+      budgetLeft = document.querySelector('span#left')
+
+
+let budget, userBudget;
+
+const  html = new HTML()
+
+// EventListeners
+eventListeners();
 function eventListeners(){
-    document.getElementById('input-form').addEventListener('submit', onSubmit)
-    itemList.addEventListener('click', removeItem)
-    document.addEventListener('DOMContentLoaded', pageOnLoad)
 
+    document.addEventListener('DOMContentLoaded', function(){
 
-}
+        userBudget = prompt('What\'s your budget for this week? ');
 
-//Function
-function listTemplate(item){
-    const list = document.createElement('li')
-    const removeBtn = document.createElement('span')
-    removeBtn.classList = 'removeBtn'
-    removeBtn.textContent = 'X'
-    list.textContent = item
-    list.appendChild(removeBtn)
-    itemList.appendChild(list)
-}
-function onSubmit(e){
-    e.preventDefault()
-    const inputData = document.querySelector('.input').value
+        if(userBudget === null || userBudget === '' ||userBudget === '0' ){
+            window.location.reload();
+        }else{
+            budget = new Budget(userBudget)
 
-    listTemplate(inputData)
-
-    addToStorage(inputData)
-
-    this.reset()
-
-}
-
-
-function removeItem (e){
-    if(e.target.classList.contains('removeBtn')){
-       
-        e.target.parentElement.remove()
-    }
-    
-    deleteFromStorage(e.target.parentElement.textContent)
-}
-
-function addToStorage(item){
-   let storeItems =getFromStorage()
-
-    storeItems.push(item)
-   localStorage.setItem('items', JSON.stringify(storeItems))
-
-}
-
-function getFromStorage(){
-    let items;
-    const storeItems = localStorage.getItem('items') 
-
-    if(storeItems === null){
-        items=[]
-    }else{
-        items = JSON.parse(storeItems)
-    }
-
-    return items 
-
-}
-
-function deleteFromStorage(item){
-    let storeItems =getFromStorage()
-    console.log('B4:', storeItems)
-
-    const removeX = item.substring(0, item.length -1)
-
-    storeItems.forEach((item,index) =>{
-        if(item === removeX ){
-            storeItems.splice(index, 1)
+            html.insertBudget(budget.budget)
         }
+
+        
     })
-  
-    // send the rest in LStorage
-    localStorage.setItem('items', JSON.stringify(storeItems))
-    console.log('Af:', storeItems)
+
+    expenseForm.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        const expenseValue = document.querySelector('#expense').value;
+        const amountValue = document.querySelector('#amount').value;
+
+        if(expenseValue === '' || amountValue === ''){
+            html.printMessage('All fields are mandatory',  'alert')
+        }
+        else{
+            html.addExpenseList(expenseValue, amountValue)
+        }
+
+    })
+
+
 
 }
-
-
-
-function pageOnLoad(){
-  let storeItems =getFromStorage()
-
-  storeItems.forEach(item=>{
-
-      listTemplate(item)
-  })
-
-}
-
-
-
-
-
-
